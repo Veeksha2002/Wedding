@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deepak & Meghna Wedding Invitation</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+
+<!-- FontAwesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<style>
+  /* Reset & base styles */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: "Roboto", sans-serif;
+    background: #fef9f0;
+    color: #4b3b2b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: #b76e27;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Decorative corner SVG containers */
+  .corner-decoration {
+    position: fixed;
+    width: 120px;
+    height: 120px;
+    z-index: 1000;
+    opacity: 0.15;
+    filter: drop-shadow(2px 2px 1px rgba(183, 110, 39, 0.2));
+    transition: opacity 0.5s ease;
+  }
+  .corner-decoration svg {
+    width: 100%;
+    height: 100%;
+    fill: #b76e27;
+  }
+  .corner-top-left {
+    top: 0;
+    left: 0;
+    transform: rotate(0deg);
+  }
+  .corner-top-right {
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+  }
+  .corner-bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: rotate(270deg);
+  }
+  .corner-bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+  }
+
+  /* Hero Header */
+  header {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+    font-smooth: antialiased;
+  }
+  /* Hero background */
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Use local Wed.jpg as background with a soft gradient overlay and reduced brightness
+       The Jinja `url_for` will resolve to the static file path when rendered by Flask. */
+    background:
+      linear-gradient(to bottom right, rgba(183,110,39,0.66), rgba(247,182,59,0.42)),
+  url("{{ url_for('static', filename='Wed.jpg') }}") no-repeat center center / cover;
+    /* Make the image faded and less saturated so the text remains readable */
+    filter: brightness(0.55) saturate(0.95) contrast(0.98);
+    z-index: -2;
+    will-change: transform;
+  }
+  /* Overlay soft vignette */
+  header::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.5) 100%);
+    z-index: -1;
+  }
+
+  /* Hero Text */
+  header .content {
+    max-width: 900px;
+  }
+  header h1 {
+    font-family: "Great Vibes", cursive;
+    font-size: calc(3rem + 4vw);
+    margin-bottom: 0.3em;
+    text-shadow:
+      0 0 8px rgba(255, 175, 58, 0.9),
+      0 0 15px rgba(255, 175, 58, 0.6);
+    letter-spacing: 0.04em;
+  }
+  header h3 {
+    font-weight: 300;
+    font-size: calc(0.9rem + 1vw);
+    letter-spacing: 5px;
+    color: #ffdeb7cc;
+    text-shadow: 0 0 6px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+  }
+  header p {
+    font-size: 1.25rem;
+    max-width: 520px;
+    margin: 0 auto;
+    color: #ffe4b8cc;
+    font-style: italic;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .scroll-down {
+    margin-top: 40px;
+    font-size: 3rem;
+    color: #ffdeb7cc;
+    animation: bounce 1.6s ease-in-out infinite;
+    cursor: pointer;
+    text-shadow: 0 0 10px rgba(255, 230, 130, 0.9);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0);}
+    50% { transform: translateY(18px);}
+  }
+
+  main {
+    width: 100%;
+    max-width: 980px;
+    background: white;
+    margin: -140px auto 60px;
+    padding: 60px 60px 80px 60px;
+    box-shadow: 0 15px 45px rgba(183, 110, 39, 0.2);
+    border-radius: 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Headings */
+  h2 {
+    font-family: "Great Vibes", cursive;
+    font-size: 3.8rem;
+    color: #b76e27;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+    text-align: center;
+    position: relative;
+  }
+  h2::after {
+    content: "";
+    display: block;
+    margin: 14px auto 0 auto;
+    height: 5px;
+    width: 130px;
+    background: linear-gradient(90deg, #f7b733, #d77937 55%, #b76e27);
+    border-radius: 6px;
+  }
+
+  section p {
+    font-size: 1.25rem;
+    color: #6b4e22;
+    max-width: 720px;
+    margin: 22px auto 44px auto;
+    font-weight: 500;
+    line-height: 1.74;
+  }
+
+  /* Equal vertical spacing between sections so each h2 appears with consistent space */
+  section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  /* Reveal animation for sections */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 600ms cubic-bezier(.2,.9,.3,1), transform 600ms cubic-bezier(.2,.9,.3,1);
+    will-change: opacity, transform;
+  }
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Countdown */
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 38px;
+  }
+  .countdown div {
+    background: linear-gradient(135deg, #f7b733, #b76e27);
+    color: white;
+    font-weight: 700;
+    font-size: 1.8rem;
+    border-radius: 24px;
+    padding: 28px 35px;
+    min-width: 130px;
+    box-shadow: 0 12px 28px rgba(183, 110, 39, 0.35);
+    transition: transform 0.3s ease;
+    user-select: none;
+  }
+  .countdown div:hover {
+    transform: scale(1.18);
+  }
+  .countdown span {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.4em;
+  }
+
+  /* Wedding Details Icons */
+  .wedding-info {
+    max-width: 720px;
+    margin: 0 auto 50px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 36px;
+    color: #7c5a20;
+  }
+  .wedding-info div {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .wedding-info i {
+    font-size: 2.7rem;
+    flex-shrink: 0;
+    color: #b76e27;
+    filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.1));
+    margin-top: 4px;
+  }
+  .wedding-info p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    text-shadow: 1px 1px 1px rgba(255 255 255 / 0.3);
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 24px;
+    margin-top: 12px;
+  }
+  .gallery img {
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: 0 14px 50px rgb(183 110 39 / 0.15);
+    transition: transform 0.32s ease, box-shadow 0.32s ease;
+    cursor: pointer;
+  }
+  .gallery img:hover {
+    transform: scale(1.06);
+    box-shadow: 0 22px 70px rgb(222 131 34 / 0.42);
+  }
+  /* small variant for single/local image */
+  .gallery img.small {
+    width: 220px; /* desired small size */
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(183,110,39,0.14);
+  }
+
+  /* Map embed */
+  iframe {
+    margin: 48px auto 0 auto;
+    max-width: 760px;
+    width: 100%;
+    height: 400px;
+    border: none;
+    border-radius: 28px;
+    box-shadow: 0 18px 60px rgb(183 110 39 / 0.3);
+    display: block;
+  }
+
+  /* Footer */
+  footer {
+    background: linear-gradient(135deg, #b76e27, #f7b733);
+    width: 100%;
+    padding: 60px 20px;
+    color: #fff7db;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.15);
+    margin-top: 80px;
+    box-shadow: 0 -14px 68px rgb(183 110 39 / 0.55);
+    position: relative;
+  }
+  footer i {
+    color: #fbefc2;
+    margin-left: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    header h1 {
+      font-size: 3.8rem;
+    }
+    header p {
+      font-size: 1.05rem;
+      max-width: 280px;
+      margin: auto;
+    }
+    header h3 {
+      font-size: 1rem;
+      letter-spacing: 4px;
+    }
+    .countdown {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    main {
+      margin: -120px 15px 40px 15px;
+      padding: 45px 30px 60px 30px;
+      border-radius: 32px;
+    }
+    h2 {
+      font-size: 2.7rem;
+    }
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Decorative corners -->
+  <div class="corner-decoration corner-top-left" aria-hidden="true">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" >
+      <path d="M10 30 Q25 5, 40 30 T50 55" stroke-width="3" stroke="currentColor" fill="none" />
+      <circle cx="40" cy="30" r="10" fill="currentColor" fill-opacity="0.2" />
+      <path d="M20 50 Q30 30, 40 45" stroke-width="1.5" stroke="currentColor" fill="none" />
+    </svg>
+  </div>
+
+  <div class="corner-decoration corner-top-right" aria-hidden="true">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10 30 Q25 5, 40 30 T50 55" stroke-width="3" stroke="currentColor" fill="none" />
+      <circle cx="40" cy="30" r="10" fill="currentColor" fill-opacity="0.2" />
+      <path d="M20 50 Q30 30, 40 45" stroke-width="1.5" stroke="currentColor" fill="none" />
+    </svg>
+  </div>
+
+  <div class="corner-decoration corner-bottom-left" aria-hidden="true">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10 30 Q25 5, 40 30 T50 55" stroke-width="3" stroke="currentColor" fill="none" />
+      <circle cx="40" cy="30" r="10" fill="currentColor" fill-opacity="0.2" />
+      <path d="M20 50 Q30 30, 40 45" stroke-width="1.5" stroke="currentColor" fill="none" />
+    </svg>
+  </div>
+
+  <div class="corner-decoration corner-bottom-right" aria-hidden="true">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10 30 Q25 5, 40 30 T50 55" stroke-width="3" stroke="currentColor" fill="none" />
+      <circle cx="40" cy="30" r="10" fill="currentColor" fill-opacity="0.2" />
+      <path d="M20 50 Q30 30, 40 45" stroke-width="1.5" stroke="currentColor" fill="none" />
+    </svg>
+  </div>
+
+  <header role="banner" aria-label="Wedding Invitation Header">
+    <div class="content">
+      <h1>Deepak &amp; Meghna</h1>
+      <h3>Are getting married</h3>
+      <p>Join us for the celebration of love, laughter, and happily ever after on March 06, 2026</p>
+      <a href="#countdown-section" class="scroll-down" aria-label="Scroll down to countdown">
+        <i class="fa-solid fa-arrow-down"></i>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section id="countdown-section" aria-live="polite" aria-atomic="true" aria-label="Countdown to wedding day">
+      <h2>Countdown to Our Big Day</h2>
+      <div class="countdown" id="countdown" role="list">
+        <div role="listitem"><span id="days">0</span>Days</div>
+        <div role="listitem"><span id="hours">0</span>Hours</div>
+        <div role="listitem"><span id="minutes">0</span>Minutes</div>
+        <div role="listitem"><span id="seconds">0</span>Seconds</div>
+      </div>
+    </section>
+
+    <section id="our-story" aria-label="Our Love Story">
+      <h2>Our Love Story</h2>
+      <p>From strangers to soulmates, Deepak and Meghna’s journey began with a smile and blossomed into a lifetime of love. Their story truly took flight the day they first met at a vibrant Holi event—colors in the air, laughter all around, and an instant spark neither of them saw coming.
+
+What started as a cheerful festival encounter soon grew into a beautiful friendship. From sharing jokes to endless conversations, they became each other’s safe place. Their first message on Instagram opened the door to countless late-night chats, stories, and heartfelt moments. With every text and every meeting, they found themselves drawn closer, discovering love in the simplest gestures and the deepest understanding.
+
+Today, that first smile has grown into a promise for life.
+
+We invite you to witness and celebrate this beautiful union as Deepak and Meghna step into forever, hand in hand and heart to heart. 💫💍</p>
+    </section>
+
+    <section id="wedding-details" aria-label="Wedding Details">
+      <h2>Wedding Details</h2>
+      <div class="wedding-info">
+        <div>
+          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+          <p><strong>Location:</strong> SHUBHALAXMI AUDITORIUM, Benjanpadav, Bantwal, Karnataka 574219</p>
+        </div>
+        <div>
+          <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+          <p><strong>Date:</strong> March 06, 2026</p>
+        </div>
+        <div>
+          <i class="fas fa-clock" aria-hidden="true"></i>
+          <p><strong>Time:</strong> 10:00 AM (Morning Ceremony)</p>
+        </div>
+      </div>
+      <iframe title="Map Location SHUBHALAXMI AUDITORIUM" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.123456789012!2d75.123456!3d13.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba4b5c6d7e8f9a1%3A0x1a2b3c4d5e6f7g8h!2sSHUBHALAXMI%20AUDITORIUM!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <section id="gallery" aria-label="Wedding Memories Gallery">
+      <h2>Our Memories</h2>
+      <div class="gallery">
+        <img class="small" src="{{ url_for('static', filename='Wed 1.jpg') }}" alt="Memory: Wed 1" />
+        <img class="small" src="{{ url_for('static', filename='Wed 2.jpg') }}" alt="Memory: Wed 2" />
+        <img class="small" src="{{ url_for('static', filename='Wed 3.jpg') }}" alt="Memory: Wed 3" />
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    With love, Deepak &amp; Meghna <i class="fa-solid fa-heart"></i>
+  </footer>
+
+<script>
+// Countdown Script
+const countdownDate = new Date("March 06, 2026 10:00:00").getTime();
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = countdownDate - now;
+  if (distance < 0) {
+    document.getElementById("countdown").innerHTML = "<div>Wedding Day!</div>";
+    return;
+  }
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  ['days','hours','minutes','seconds'].forEach(id => {
+    document.getElementById(id).innerText = String(eval(id)).padStart(2,'0');
+  });
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+</script>
+
+<script>
+  // Reveal-on-scroll for sections (staggered)
+  (function(){
+    const sections = document.querySelectorAll('main section');
+    if(!sections.length) return;
+
+    // add the reveal class to each section so CSS handles the animation
+    sections.forEach(s => s.classList.add('reveal'));
+
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            // use the node index for a small stagger
+            const all = Array.from(sections);
+            const idx = all.indexOf(entry.target);
+            entry.target.style.transitionDelay = `${Math.min(idx * 120, 480)}ms`;
+            entry.target.classList.add('active');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      sections.forEach(s => io.observe(s));
+    } else {
+      // fallback: just show all
+      sections.forEach((s,i) => { s.style.transitionDelay = `${Math.min(i * 120,480)}ms`; s.classList.add('active'); });
+    }
+  })();
+</script>
+
+</body>
+</html>
+
